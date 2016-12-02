@@ -51,9 +51,7 @@ class PostController extends ApiController
      */
     public function show(Post $post): JsonResponse
     {
-        return $post
-            ? $this->respondWithItem($post, new PostTransformer(), 'posts')
-            : $this->errorNotFound();
+        return $this->respondWithItem($post, new PostTransformer(), 'posts');
     }
 
     /**

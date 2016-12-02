@@ -48,9 +48,7 @@ class TypeController extends ApiController
      */
     public function show(Type $type) : JsonResponse
     {
-        return $type
-            ? $this->respondWithItem($type, new TypeTransformer(), 'types')
-            : $this->errorNotFound();
+        return $this->respondWithItem($type, new TypeTransformer(), 'types');
     }
 
     /**

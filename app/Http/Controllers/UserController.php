@@ -49,9 +49,7 @@ class UserController extends ApiController
      */
     public function show(User $user) : JsonResponse
     {
-        return $user
-            ? $this->respondWithItem($user, new UserTransformer(), 'users')
-            : $this->errorNotFound();
+        return $this->respondWithItem($user, new UserTransformer(), 'users');
     }
 
     /**

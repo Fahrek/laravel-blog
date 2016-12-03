@@ -34,11 +34,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Passport::routes();
+        // Passport::routes();
 
-        Passport::tokensCan([
-            'admin-scope' => 'Do everything',
-            'editor-scope' => 'Do some thing',
-        ]);
+        // Passport::tokensCan([
+        //     'admin-scope' => 'Do everything',
+        //     'editor-scope' => 'Do some thing',
+        // ]);
     }
 }

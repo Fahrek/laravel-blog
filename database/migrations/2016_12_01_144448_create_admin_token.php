@@ -13,9 +13,9 @@ class CreateAdminToken extends Migration
      */
     public function up()
     {
-        Artisan::call('passport:install');
+        // Artisan::call('passport:install');
 
-        User::find(1)->createToken('Admin token', ['admin-scope']);
+        // User::find(1)->createToken('Admin token', ['admin-scope']);
     }
 
     /**

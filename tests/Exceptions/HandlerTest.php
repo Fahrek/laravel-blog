@@ -65,4 +65,11 @@ class HandlerTest extends TestCase
             ->assertResponseStatus(404)
             ->seeJson(['error' => 'Resource not found.']);
     }
+
+    public function test_it_should_respond_with_not_found_if_endpoint_does_not_exist()
+    {
+        $this->json('GET', '/api/a-route-that-does-not-exist')
+            ->assertResponseStatus(404)
+            ->seeJson(['error' => 'Endpoint not found.']);
+    }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Post;
 
+use App\Http\Requests\ApiRequest;
 use App\Post;
-use Illuminate\Foundation\Http\FormRequest;
 
-class StorePostRequest extends FormRequest
+class StorePostRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.

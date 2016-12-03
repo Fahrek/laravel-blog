@@ -34,7 +34,8 @@ class PostPolicyTest extends TestCase
         ];
 
         $this->json('POST', '/api/posts', $post)
-            ->assertResponseStatus(401);
+            ->assertResponseStatus(401)
+            ->seeJson($this->unauthorizedResponse);
     }
 
     public function test_authenticated_can_create_post()
@@ -68,7 +69,8 @@ class PostPolicyTest extends TestCase
         ];
 
         $this->json('PUT', '/api/posts/' . $post->id, $update)
-            ->assertResponseStatus(401);
+            ->assertResponseStatus(401)
+            ->seeJson($this->unauthorizedResponse);
     }
 
     public function test_authenticated_can_update_its_post()
@@ -104,7 +106,8 @@ class PostPolicyTest extends TestCase
 
         $this->actingAs($user1, 'api')
             ->json('PUT', '/api/posts/' . $post->id, $update)
-            ->assertResponseStatus(403);
+            ->assertResponseStatus(403)
+            ->seeJson($this->forbiddenResponse);
     }
 
     public function test_admin_can_update_others_post()
@@ -129,7 +132,8 @@ class PostPolicyTest extends TestCase
         $post = factory(Post::class)->create();
 
         $this->json('DELETE', '/api/posts/' . $post->id)
-            ->assertResponseStatus(401);
+            ->assertResponseStatus(401)
+            ->seeJson($this->unauthorizedResponse);
     }
 
     public function test_authenticated_can_delete_post_its_post()
@@ -149,7 +153,8 @@ class PostPolicyTest extends TestCase
 
         $this->actingAs($user1, 'api')
             ->json('DELETE', '/api/posts/' . $post->id)
-            ->assertResponseStatus(403);
+            ->assertResponseStatus(403)
+            ->seeJson($this->forbiddenResponse);
     }
 
     public function test_admin_can_delete_others_post()

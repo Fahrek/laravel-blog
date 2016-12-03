@@ -159,17 +159,17 @@ class ApiController extends Controller
     /**
      * Generate an error Response.
      *
-     * @param string $message
+     * @param array $messages
      * @param string $errorCode
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithError(string $message, string $errorCode): JsonResponse
+    protected function respondWithError(array $messages, string $errorCode): JsonResponse
     {
         return $this->respondWithArray([
             'error' => [
                 'code' => $errorCode,
-                'http_code' => $this->statusCode,
-                'message' => $message,
+                'status' => $this->statusCode,
+                'messages' => $messages,
             ]
         ]);
     }
@@ -191,10 +191,10 @@ class ApiController extends Controller
      * @param string $message
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function errorForbidden(string $message = 'Forbidden'): JsonResponse
+    public function errorForbidden(string $message = 'Forbidden.'): JsonResponse
     {
         return $this->setStatusCode(403)
-            ->respondWithError($message, self::CODE_FORBIDDEN);
+            ->respondWithError([$message], self::CODE_FORBIDDEN);
     }
 
     /**
@@ -203,10 +203,10 @@ class ApiController extends Controller
      * @param string $message
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function errorInternalError(string $message = 'Internal Error'): JsonResponse
+    public function errorInternalError(string $message = 'Internal error.'): JsonResponse
     {
         return $this->setStatusCode(500)
-            ->respondWithError($message, self::CODE_INTERNAL_ERROR);
+            ->respondWithError([$message], self::CODE_INTERNAL_ERROR);
     }
 
     /**
@@ -215,10 +215,10 @@ class ApiController extends Controller
      * @param string $message
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function errorNotFound(string $message = 'Resource Not Found'): JsonResponse
+    public function errorNotFound(string $message = 'Resource not found.'): JsonResponse
     {
         return $this->setStatusCode(404)
-            ->respondWithError($message, self::CODE_NOT_FOUND);
+            ->respondWithError([$message], self::CODE_NOT_FOUND);
     }
 
     /**
@@ -227,10 +227,10 @@ class ApiController extends Controller
      * @param string $message
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function errorUnauthorized(string $message = 'Unauthorized'): JsonResponse
+    public function errorUnauthorized(string $message = 'Unauthorized.'): JsonResponse
     {
         return $this->setStatusCode(401)
-            ->respondWithError($message, self::CODE_UNAUTHORIZED);
+            ->respondWithError([$message], self::CODE_UNAUTHORIZED);
     }
 
     /**
@@ -239,10 +239,10 @@ class ApiController extends Controller
      * @param string $message
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function errorWrongArgs(string $message = 'Wrong Arguments'): JsonResponse
+    public function errorWrongArgs(string $message = 'Wrong arguments.'): JsonResponse
     {
         return $this->setStatusCode(400)
-            ->respondWithError($message, self::CODE_WRONG_ARGS);
+            ->respondWithError([$message], self::CODE_WRONG_ARGS);
     }
 
     /**
@@ -251,14 +251,14 @@ class ApiController extends Controller
      * @param \Illuminate\Contracts\Support\MessageBag $messages
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function errorUnprocessableEntity(MessageBag $messages): JsonResponse
+    public function errorUnprocessableEntity(MessageBag $messages): JsonResponse
     {
         return $this->setStatusCode(422)
             ->respondWithArray([
                 'error' => [
                     'code' => self::CODE_UNPROCESSABLE_ENTITY,
-                    'http_code' => 422,
-                    'message' => $messages
+                    'status' => 422,
+                    'messages' => $messages->toArray()
                 ]
             ]);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\ApiController;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -42,17 +43,17 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
     public function render($request, Exception $exception)
     {
         if ($request->is('api/*')) {
             if ($exception instanceof ModelNotFoundException) {
-                return response()->json(['error' => 'Resource not found.'], 404);
+                return (new ApiController())->errorNotFound();
             }
 
             if ($exception instanceof NotFoundHttpException) {
-                return response()->json(['error' => 'Endpoint not found.'], 404);
+                return (new ApiController())->errorNotFound('Endpoint not found.');
             }
         }
 
@@ -64,12 +65,12 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Auth\AuthenticationException  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+            return (new ApiController())->errorUnauthorized();
         }
 
         return redirect()->guest('login');

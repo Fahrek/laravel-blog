@@ -7,7 +7,13 @@ use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
-    public function transform(User $user)
+    /**
+     * Turn this item object into a generic array.
+     *
+     * @param \App\User $user
+     * @return array
+     */
+    public function transform(User $user) : array
     {
         return [
             'id' => (int) $user->id,

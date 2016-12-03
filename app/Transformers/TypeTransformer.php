@@ -7,7 +7,13 @@ use League\Fractal\TransformerAbstract;
 
 class TypeTransformer extends TransformerAbstract
 {
-    public function transform(Type $type)
+    /**
+     * Turn this item object into a generic array.
+     *
+     * @param \App\Type $type
+     * @return array
+     */
+    public function transform(Type $type) : array
     {
         return [
             'id' => (int) $type->id,

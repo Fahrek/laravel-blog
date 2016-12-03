@@ -40,6 +40,8 @@ Route::delete('/types/{type}', 'TypeController@destroy')->middleware(['auth:api'
  */
 Route::get('/posts', 'PostController@index');
 Route::get('/posts/{post}', 'PostController@show');
+Route::get('/posts/{post}/user', 'PostUserController@show');
+Route::get('/posts/{post}/type', 'PostTypeController@show');
 Route::post('/posts', 'PostController@store')->middleware(['auth:api']);
 Route::put('/posts/{post}', 'PostController@update')->middleware(['auth:api']);
 Route::delete('/posts/{post}', 'PostController@destroy')->middleware(['auth:api']);
